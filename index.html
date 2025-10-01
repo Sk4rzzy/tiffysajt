@@ -53,6 +53,31 @@
     .letter p{font-size:14px;color:#444;line-height:1.4}
 
     .hint{position:fixed;right:12px;bottom:12px;background:rgba(0,0,0,0.6);color:white;padding:6px 10px;border-radius:10px;font-size:12px}
+
+        /* tvoji postojeći stilovi */
+
+    .letter {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 16px;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      max-width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      display: none;
+      z-index: 10000;
+    }
+
+    .letter img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
   </style>
 </head>
 <body>
@@ -151,4 +176,5 @@
     });
   </script>
 </body>
+
 </html>
