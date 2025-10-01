@@ -9,7 +9,7 @@
       --bg:#fff7f0;
       --accent:#e67a36;
       --shadow: rgba(0,0,0,0.12);
-      --kitten-size:48px; /* default smaller for phones */
+      --kitten-size:48px;
       --speech-bg: #fff;
     }
     html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial}
@@ -48,36 +48,35 @@
     }
     .speech::after{content:'';position:absolute;left:6px;bottom:-6px;border-width:6px;border-style:solid;border-color:var(--speech-bg) transparent transparent transparent}
 
-    .letter{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:16px;border-radius:14px;box-shadow:0 6px 20px rgba(0,0,0,0.25);max-width:90%;display:none;z-index:10000}
-    .letter h2{margin-top:0;font-size:18px;color:#e67a36}
-    .letter p{font-size:14px;color:#444;line-height:1.4}
-
-    .hint{position:fixed;right:12px;bottom:12px;background:rgba(0,0,0,0.6);color:white;padding:6px 10px;border-radius:10px;font-size:12px}
-
-        /* tvoji postojeći stilovi */
+    /* FIXED LETTER STYLE */
+    .letter-wrapper {
+      position: fixed;
+      inset: 0;
+      display: none; /* hidden by default */
+      justify-content: center;
+      align-items: center;
+      background: rgba(0,0,0,0.3);
+      padding: 10px;
+      z-index: 10000;
+      overflow-y: auto;
+    }
 
     .letter {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      padding: 16px;
-      border-radius: 14px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-      max-width: 90%;
-      max-height: 80vh;
+      background:white;
+      padding:16px;
+      border-radius:14px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.25);
+      max-width: 500px;
+      width: 90%;
+      max-height: 90vh;
       overflow-y: auto;
-      display: none;
-      z-index: 10000;
     }
 
-    .letter img {
-      width: 100%;
-      max-width: 400px;
-      border-radius: 5px;
-      margin: 10px 0;
-    }
+    .letter h2{margin-top:0;font-size:18px;color:#e67a36}
+    .letter p{font-size:14px;color:#444;line-height:1.4}
+    .letter img{width:100%;max-width:400px;border-radius:5px;margin:10px 0;}
+
+    .hint{position:fixed;right:12px;bottom:12px;background:rgba(0,0,0,0.6);color:white;padding:6px 10px;border-radius:10px;font-size:12px}
   </style>
 </head>
 <body>
@@ -92,13 +91,16 @@
 
   <div class="hint">1. Press start / 2. Turn on music / 3. Tap on screen / 4. Enjoy :3🍂</div>
 
-  <div class="letter" id="letter">
-    <h2>Letter for Tiffy! ^^ 💘🫶</h2>
-    <p>I know its just a silly trend and nothing specifically significant but why not to make you something cute when i can.Its bad i know because you wont be able to visit this site all the time when you want or save it somehow but dont worry i have this all saved on flash usb and every lets call this "cute gift" i make for you will be saved on it so at least somehow memory on it is made heh</p>
-    <p>Thank you for being with me and being all this patient and nice and cute and JRBFASHDBSDHG MWAAAAAH! literally everything ur just soo perfect and i cannot wait to see you again baby, i miss you alot im glad we are doing good as relationship and im glad we just keep going after and after and problem after problem as we gonna do it trough life my love.You mean a world to me.I dont wanna lose you ever.</p>
-    <P>This is all i know creative to make idk to draw i wish i could draw us and place it literally beside my computer ;-; and save it but at least i printed it and have it with myself ehehehhe :3</P>
-    <p>I love you soo much, Forever yours.💘💘</p>
-    <img src="mycutie.jpg" alt="Us" style="width:50%;border-radius:5px;margin:10px 0;">
+  <!-- WRAPPER ZA SCROLL I CENTRIRANJE -->
+  <div class="letter-wrapper" id="letterWrapper">
+    <div class="letter" id="letter">
+      <h2>Letter for Tiffy! ^^ 💘🫶</h2>
+      <p>I know its just a silly trend and nothing specifically significant but why not to make you something cute when i can.Its bad i know because you wont be able to visit this site all the time when you want or save it somehow but dont worry i have this all saved on flash usb and every lets call this "cute gift" i make for you will be saved on it so at least somehow memory on it is made heh</p>
+      <p>Thank you for being with me and being all this patient and nice and cute and JRBFASHDBSDHG MWAAAAAH! literally everything ur just soo perfect and i cannot wait to see you again baby, i miss you alot im glad we are doing good as relationship and im glad we just keep going after and after and problem after problem as we gonna do it trough life my love.You mean a world to me.I dont wanna lose you ever.</p>
+      <P>This is all i know creative to make idk to draw i wish i could draw us and place it literally beside my computer ;-; and save it but at least i printed it and have it with myself ehehehhe :3</P>
+      <p>I love you soo much, Forever yours.💘💘</p>
+      <img src="mycutie.jpg" alt="Us">
+    </div>
   </div>
 
   <audio id="bgMusic" loop>
@@ -112,7 +114,7 @@
     const musicBtn = document.getElementById('musicBtn');
     const letterBtn = document.getElementById('letterBtn');
     const bgMusic = document.getElementById('bgMusic');
-    const letter = document.getElementById('letter');
+    const letterWrapper = document.getElementById('letterWrapper');
 
     const emojis = ["🐱","😺","😻","😽","🐈"];
     const leaves = ["🍂","🍁","🍃"];
@@ -150,9 +152,7 @@
         intervalId = setInterval(spawnCat, spawnInterval);
       }
       startBtn.disabled = true;
-      stopBtn.disabled = false;
     };
-
 
     moreBtn.onclick = ()=>spawnCat();
 
@@ -167,7 +167,7 @@
     };
 
     letterBtn.onclick = ()=>{
-      letter.style.display = letter.style.display === 'block' ? 'none' : 'block';
+      letterWrapper.style.display = letterWrapper.style.display === 'flex' ? 'none' : 'flex';
     };
 
     document.addEventListener('click',(e)=>{
@@ -176,5 +176,4 @@
     });
   </script>
 </body>
-
 </html>
